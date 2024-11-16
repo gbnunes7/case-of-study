@@ -1,3 +1,65 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "next/core-web-vitals",              // Regras do Next.js para Web Vitals
+    "next/typescript",                   // Regras recomendadas para TypeScript no Next.js
+    "eslint:recommended",                // Regras recomendadas do ESLint
+    "plugin:@typescript-eslint/recommended", // Regras recomendadas para TypeScript
+    "airbnb-base"                        // Regras de estilo do Airbnb (padrões populares de estilo de código)
+  ],
+  "parser": "@typescript-eslint/parser",     // Usar o parser do TypeScript
+  "parserOptions": {
+    "ecmaVersion": 12,                    // Suporta ES2021
+    "sourceType": "module",               // Suporta módulos ES6
+    "project": "./tsconfig.json"           // Usar o tsconfig.json para entender os tipos
+  },
+  "plugins": [
+    "@typescript-eslint",                 // Plugin para TypeScript
+    "import"
+  ],
+  "rules": {
+    // Regras do ESLint recomendadas
+    "no-unused-vars": "off",                         // Deixa o ESLint tratar isso com o plugin TypeScript
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Alerta sobre variáveis não utilizadas
+
+    // Regras para evitar tipos 'any'
+    "@typescript-eslint/no-explicit-any": "error",  // Proíbe o uso de 'any'
+
+    // Garantir tipos de retorno explícitos em funções
+    "@typescript-eslint/explicit-function-return-type": "warn", // Torna o tipo de retorno explícito uma advertência
+
+    // Outras boas práticas
+    "@typescript-eslint/explicit-module-boundary-types": "off", // Pode ser "warn" se quiser forçar tipos explícitos
+    "no-console": ["warn", { "allow": ["warn", "error"] }], // Permite console.warn e console.error
+    "prefer-const": "warn",                         // Prefere const ao invés de let quando possível
+    "quotes": ["warn", "single"],                   // Usa aspas simples
+    "semi": ["warn", "always"],                     // Exige ponto e vírgula no final de declarações
+
+    // Regras para importação
+    "import/order": ["error", {
+      "groups": [
+        ["builtin", "external", "internal"]           // Ordenação das importações
+      ],
+      "newlines-between": "always"                    // Garante uma linha em branco entre grupos de importação
+    }],
+    "import/no-unresolved": "error",                 // Garante que as importações sejam resolvidas corretamente
+
+    // Outras boas práticas para a qualidade do código
+    "no-debugger": "warn",                          // Evita o uso de `debugger`
+    "no-undef": "off",                              // Tipo de erro para variáveis não definidas será tratado pelo TypeScript
+    "no-fallthrough": "error",                      // Evita o "fallthrough" em estruturas switch sem o `break`
+    "no-shadow": "warn"                             // Previne o sombreamento de variáveis
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"  // Desabilita a regra `no-undef` para TypeScript
+      }
+    }
+  ]
 }
